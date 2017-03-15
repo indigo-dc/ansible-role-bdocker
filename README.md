@@ -16,7 +16,7 @@ cluster-wn[01:02]
 
 [storage]
 st
- <code>
+ </code>
 </pre>
 
 ## How to add this role to your playbook
@@ -27,6 +27,6 @@ st
    become: yes
    roles:
    - { role: ansible-role-bdocker, tags: [ 'bdocker' ] }
-   </code>
-  </pre>
+ </code>
+</pre>
 
