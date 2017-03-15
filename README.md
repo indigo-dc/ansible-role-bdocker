@@ -3,7 +3,7 @@
 <p>At this point in time, this role assumes that you are working with a Systemd enabled OSs.</p>
 <p>So far it has been tested on CentOS 7.</p>
 <p>bdocker repo: https://github.com/indigo-dc/bdocker</p>
-<p>bdocker documentation: https://www.gitbook.com/book/jorgesece/bdocker/details</p>
+<p>bdocker documentation: https://www.gitbook.com/book/indigo-dc/bdocker/details</p>
 
 ## Inventory file sample:
 <pre><code>
