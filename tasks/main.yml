@@ -1,0 +1,5 @@
+---
+# tasks file for ansible-role-bdocker
+
+- name: install and configure bdocker
+  include: install.yml

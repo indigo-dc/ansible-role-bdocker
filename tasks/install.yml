@@ -1,0 +1,63 @@
+---
+
+- name: verify pip installation
+  include: install-pip.yml
+
+- name: get bdocker from github
+  git:
+    repo: https://github.com/indigo-dc/bdocker.git
+    dest: "{{ install_dir }}"
+    version: master
+
+- name: install bdocker requirements
+  pip:
+     chdir: "{{ install_dir }}"
+     requirements: requirements.txt
+
+- name: install bdocker
+  pip:
+     name: .
+     chdir: "{{ install_dir }}"
+
+- name: Write configuration file
+  template: 
+     src: templates/configure_bdocker.cfg.j2
+     dest: /etc/configure_bdocker.cfg
+     backup: "{{ backup_conf_files }}"
+     owner: root
+     group: root
+     mode: 0644
+
+- name: copy service files [accounting]
+  copy:
+     src: files/acc_bdocker.service
+     dest: /lib/systemd/system/bdocker.service
+     owner: root
+     group: root
+     mode: 0644
+  when: ansible_hostname in groups['frontend']
+
+- name: copy service files [working]
+  copy:
+     src: files/wn_bdocker.service
+     dest: /lib/systemd/system/bdocker.service
+     owner: root
+     group: root
+     mode: 0644
+  when: ansible_hostname in groups['wn']
+
+- name: reload daemons
+  command: systemctl daemon-reload 
+
+- name: enable bdocker.service
+  service:
+     name: bdocker
+     enabled: yes
+  when: (ansible_hostname in groups['wn']) or (ansible_hostname in groups['frontend'])
+
+- name: start/restart bdocker.service
+  service:
+     name: bdocker
+     state: restarted
+  when: (ansible_hostname in groups['wn']) or (ansible_hostname in groups['frontend'])
+ 
