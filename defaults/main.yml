@@ -45,4 +45,7 @@ AND_cred_token_store: "/etc/token_store.yml"
 
 ### Command Line Client ###
 
+### SGE
 
+prologue_file: "/opt/ge-tools/exec/qlogin.sh"
+epilogue_file: "/opt/ge-tools/exec/qlogout.sh"

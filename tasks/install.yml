@@ -46,6 +46,30 @@
      mode: 0644
   when: ansible_hostname in groups['wn']
 
+- name: add prolog block to GE
+  blockinfile:
+     dest: "{{ prologue_file }}"
+     state: present
+     block: |
+        #########
+        ## BDOCKER
+        export BDOCKER_CONF_FILE="/etc/configure_bdocker.cfg"
+        echo "Configuring bdocker"
+        bdocker configure
+  when: (prologue_file is defined) and (ansible_hostname in groups['wn'])
+
+- name: add epilog block to GE
+  blockinfile:
+     dest: "{{ epilogue_file }}"
+     state: present
+     block: |
+        #########
+        ## BDOCKER
+        export BDOCKER_CONF_FILE="/etc/configure_bdocker.cfg"
+        echo "Cleaning environment"
+        bdocker clean
+  when: (epilogue_file is defined) and (ansible_hostname in groups['wn'])
+
 - name: reload daemons
   command: systemctl daemon-reload 
 
