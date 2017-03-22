@@ -54,6 +54,25 @@ token_store = {{ AND_cred_token_store }}
 {% endif %}
 
 {% if ansible_hostname in groups['ui'] %}
-# This host got dbocker client installed
-# Any needed configuration parameters will be bellow this message
+# Confuguration wise, the client node is a special case of a working node.
+
+[resource]
+role = working
+
+[server]
+host = {{ server_hostname }}
+port = {{ server_wn_port }}
+logging = {{ server_wn_logging }}
+
+[batch]
+controller = WNController
+
+[credentials]
+controller = {{ WND_cred_controller }}
+token_store = {{ WND_cred_token_store }}
+token_client_file = {{ WND_cred_token_client_file }}
+
+[dockerAPI]
+base_url = {{ WND_base_url }}
+
 {% endif %}
