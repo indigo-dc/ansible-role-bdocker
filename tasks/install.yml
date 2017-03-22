@@ -46,6 +46,15 @@
      mode: 0644
   when: ansible_hostname in groups['wn']
 
+- name: copy token_store.yml file
+  copy:
+     src: files/token_store.yml
+     dest: "{{ cred_token_store }}"
+     owner: root
+     group: root
+     mode: 0644
+  when: (ansible_hostname in groups['frontend']) or (ansible_hostname in groups['ui'])
+
 - name: add prolog block to GE
   blockinfile:
      dest: "{{ prologue_file }}"

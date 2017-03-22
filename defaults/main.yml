@@ -5,6 +5,7 @@
 
 backup_conf_files: "yes"
 install_dir: "/tmp/docker"
+cred_token_store: "/etc/token_store.yml"
 
 ### Server settings ###
 
@@ -29,7 +30,6 @@ WND_include_wallclock: True
 WND_only_docker_accounting: True
 
 WND_cred_controller: "TokenController"
-WND_cred_token_store: "/etc/token_store.yml"
 WND_cred_token_client_file: ".bdocker_token"
 
 WND_base_url: "unix://var/run/docker.sock"
@@ -41,7 +41,6 @@ AND_controller: "SGEAccountingController"
 AND_bdocker_accounting: "/root/bdocker_accounting"
 
 AND_cred_controller: "TokenController"
-AND_cred_token_store: "/etc/token_store.yml"
 
 ### Command Line Client ###
 
