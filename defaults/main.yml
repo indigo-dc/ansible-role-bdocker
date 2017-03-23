@@ -13,7 +13,7 @@ cred_token_store: "/etc/token_store.yml"
 server_wn_port: 5002
 server_acc_port: 5000
 ## Pick one from ERROR, DEBUG, ?
-server_wn_logging: "ERROR"
+server_wn_logging: "DEBUG"
 server_acc_logging: "DEBUG"
 #server_wns_nr: 2
 #server_timeout: 200
@@ -24,13 +24,12 @@ server_acc_logging: "DEBUG"
 WND_batchCtrl: "SGEWNController"
 WND_enablecgroups: "yes"
 WND_cgroups_dir: "/sys/fs/cgroup"
-WND_parent_cgroup: "/system.slice/sgeexecd.service"
-#WND_accounting_endpoint: "http://localhost:5002"
+WND_parent_cgroup: "/"
 WND_include_wallclock: "no"
-#WND_only_docker_accounting: True
+#WND_only_docker_accounting: "yes"
 
 WND_cred_controller: "TokenController"
-WND_cred_token_client_file: ".bdocker_token"
+WND_cred_token_client_file: ".token"
 
 WND_base_url: "unix://var/run/docker.sock"
 
