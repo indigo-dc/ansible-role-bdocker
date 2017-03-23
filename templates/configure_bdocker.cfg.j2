@@ -1,24 +1,34 @@
-{% if ansible_hostname in groups['wn'] %}  
+{% if ansible_hostname in groups['wn'] %}
 
 [resource]
 role = working
 
 [server]
+{% if server_hostname is defined %}
 host = {{ server_hostname }}
+{% else %}
+host = {{ ansible_default_ipv4.address }}
+{% endif %}
 port = {{ server_wn_port }}
 logging = {{ server_wn_logging }}
+{% if server_wns_nr is defined %}
 workers = {{ server_wns_nr }}
+{% endif %}
+{% if server_timeout is defined %}
 time_out = {{ server_timeout }}
+{% endif %}
 
 [batch]
-# controller can be: SGEWNController (add more modules)
 controller = {{ WND_batchCtrl }}
 enable_cgroups = {{ WND_enablecgroups }}
 cgroups_dir = {{ WND_cgroups_dir }}
 parent_cgroup = {{ WND_parent_cgroup }}
-accounting_endpoint = {{ WND_accounting_endpoint }}
+# TODO(A1ve5): make this point to accounting hostname:
+accounting_endpoint = "http://{{ hostvars[groups['frontend'][0]]['ansible_fqdn'] }}:{{ server_acc_port }}"
 include_wallclock = {{ WND_include_wallclock }}
+{% if WND_only_docker_accounting is defined %}
 only_docker_accounting = {{ WND_only_docker_accounting }}
+{% endif %}
 
 [credentials]
 controller = {{ WND_cred_controller }}
@@ -28,19 +38,27 @@ token_client_file = {{ WND_cred_token_client_file }}
 [dockerAPI]
 base_url = {{ WND_base_url }}
 
-
 {% endif %}
+
 {% if ansible_hostname in groups['frontend'] %}
 
 [resource]
 role = accounting
 
 [server]
+{% if server_hostname is defined %}
 host = {{ server_hostname }}
+{% else %}
+host = {{ ansible_default_ipv4.address }}
+{% endif %}
 port = {{ server_acc_port }}
 logging = {{ server_acc_logging }}
+{% if server_wns_nr is defined %}
 workers = {{ server_wns_nr }}
+{% endif %}
+{% if server_timeout is defined %}
 time_out = {{ server_timeout }}
+{% endif %}
 
 [batch]
 # controller can be: SGEAccountingController (add more modules)
@@ -54,25 +72,6 @@ token_store = {{ cred_token_store }}
 {% endif %}
 
 {% if ansible_hostname in groups['ui'] %}
-# Confuguration wise, the client node is a special case of a working node.
-
-[resource]
-role = working
-
-[server]
-host = {{ server_hostname }}
-port = {{ server_wn_port }}
-logging = {{ server_wn_logging }}
-
-[batch]
-controller = {{ WND_batchCtrl }}
-
-[credentials]
-controller = {{ WND_cred_controller }}
-token_store = {{ cred_token_store }}
-token_client_file = {{ WND_cred_token_client_file }}
-
-[dockerAPI]
-base_url = {{ WND_base_url }}
+# This is a client host
 
 {% endif %}

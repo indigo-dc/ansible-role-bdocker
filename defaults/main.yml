@@ -9,25 +9,25 @@ cred_token_store: "/etc/token_store.yml"
 
 ### Server settings ###
 
-server_hostname: "0.0.0.0"
-server_wn_port: 5000
-server_acc_port: 5002
-# Pick one from ERROR, DEBUG, ?
+#server_hostname: "localhost"
+server_wn_port: 5002
+server_acc_port: 5000
+## Pick one from ERROR, DEBUG, ?
 server_wn_logging: "ERROR"
 server_acc_logging: "DEBUG"
-server_wns_nr: 2
-server_timeout: 200
+#server_wns_nr: 2
+#server_timeout: 200
 
 ### Working Node Daemon ###
 
-# Pick from SGEWNController, Slurm, Torque
+## Pick from SGEWNController, Slurm, Torque
 WND_batchCtrl: "SGEWNController"
-WND_enablecgroups: True
+WND_enablecgroups: "yes"
 WND_cgroups_dir: "/sys/fs/cgroup"
-WND_parent_cgroup: "/user"
-WND_accounting_endpoint: "http://localhost:5002"
-WND_include_wallclock: True
-WND_only_docker_accounting: True
+WND_parent_cgroup: "/system.slice/sgeexecd.service"
+#WND_accounting_endpoint: "http://localhost:5002"
+WND_include_wallclock: "no"
+#WND_only_docker_accounting: True
 
 WND_cred_controller: "TokenController"
 WND_cred_token_client_file: ".bdocker_token"
@@ -38,7 +38,7 @@ WND_base_url: "unix://var/run/docker.sock"
 
 # SGEAccountingController (add more modules)
 AND_controller: "SGEAccountingController"
-bdocker_accounting: "/etc/bdocker_accounting"
+bdocker_accounting: "/opt/sge/default/common/bdocker_accounting"
 
 AND_cred_controller: "TokenController"
 
