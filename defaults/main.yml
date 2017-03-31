@@ -3,8 +3,9 @@
 #
 # by Alves @ LIP 2017
 
+bdocker_gitrepo: "https://github.com/indigo-dc/bdocker.git"
 backup_conf_files: "yes"
-install_dir: "/tmp/docker"
+install_dir: "/tmp/bdocker"
 cred_token_store: "/etc/token_store.yml"
 
 ### Server settings ###
@@ -37,9 +38,8 @@ WND_base_url: "unix://var/run/docker.sock"
 
 # SGEAccountingController (add more modules)
 AND_controller: "SGEAccountingController"
-bdocker_accounting: "/opt/sge/default/common/bdocker_accounting"
-
 AND_cred_controller: "TokenController"
+bdocker_accounting: "/opt/sge/default/common/bdocker_accounting"
 
 ### Command Line Client ###
 

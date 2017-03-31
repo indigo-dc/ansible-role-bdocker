@@ -5,7 +5,7 @@
 
 - name: get bdocker from github
   git:
-    repo: https://github.com/indigo-dc/bdocker.git
+    repo: "{{ bdocker_gitrepo }}"
     dest: "{{ install_dir }}"
     version: master
 
